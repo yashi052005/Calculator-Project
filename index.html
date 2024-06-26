@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/4c536a6bd5.js" crossorigin="anonymous"></script>
+    <script src="script.js" defer></script>
+    <title>Calculator</title>
+    <style>
+      :root {
+        --background: #f1f1f1;
+        --font: #000;
+        --border: #d1d1d1;
+        --screen: #ffffff;
+        --calculator: #ffffff;
+        --btn: #e0e0e0;
+        --btn-hover: #d0d0d0;
+        --btn-active: #c0c0c0;
+        --btn-red: #ff8a80;
+        --btn-red-hover: #ff6e67;
+        --btn-red-active: #ff5e50;
+        --btn-blue: #82b1ff;
+        --btn-blue-hover: #5c9cff;
+        --btn-blue-active: #3c8aff;
+        --btn-operator: #4caf50;
+        --btn-operator-hover: #43a047;
+        --btn-operator-active: #388e3c;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      html {
+        position: relative;
+        min-height: 100%;
+      }
+
+      body {
+        background-color: var(--background);
+        color: var(--font);
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.6;
+        margin-bottom: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      button {
+        border: none;
+        color: inherit;
+        font-family: inherit;
+        font-size: inherit;
+        cursor: pointer;
+        outline: none;
+        transition: background-color 0.3s;
+      }
+
+      /* MAIN */
+      .main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+      }
+
+      .calculator {
+        width: 300px;
+        border: 2px var(--border) solid;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: var(--calculator);
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .screen {
+        padding: 10px 20px;
+        border: 2px var(--border) solid;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        background-color: var(--screen);
+        text-align: right;
+        word-wrap: break-word;
+        word-break: break-all;
+        box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .screen-last {
+        min-height: 32px;
+        font-size: 20px;
+        color: #888;
+      }
+
+      .screen-current {
+        min-height: 64px;
+        font-size: 40px;
+      }
+
+      .buttons-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+      }
+
+      .span-2 {
+        grid-column: span 2;
+      }
+
+      .btn {
+        padding: 20px;
+        border: 2px var(--border) solid;
+        border-radius: 10px;
+        background-color: var(--btn);
+        font-size: 20px;
+      }
+
+      .btn:hover {
+        background-color: var(--btn-hover);
+      }
+
+      .btn:active {
+        background-color: var(--btn-active);
+      }
+
+      .btn-red {
+        background-color: var(--btn-red);
+      }
+
+      .btn-red:hover {
+        background-color: var(--btn-red-hover);
+      }
+
+      .btn-red:active {
+        background-color: var(--btn-red-active);
+      }
+
+      .btn-blue {
+        background-color: var(--btn-blue);
+      }
+
+      .btn-blue:hover {
+        background-color: var(--btn-blue-hover);
+      }
+
+      .btn-blue:active {
+        background-color: var(--btn-blue-active);
+      }
+
+      .btn-operator {
+        background-color: var(--btn-operator);
+        color: white;
+      }
+
+      .btn-operator:hover {
+        background-color: var(--btn-operator-hover);
+      }
+
+      .btn-operator:active {
+        background-color: var(--btn-operator-active);
+      }
+
+      input[type='number']::-webkit-inner-spin-button,
+      input[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="main">
+      <div class="calculator">
+        <div class="screen">
+          <div class="screen-last" id="lastOperationScreen"></div>
+          <div class="screen-current" id="currentOperationScreen">0</div>
+        </div>
+        <div class="buttons-grid">
+          <button class="btn btn-red span-2" id="clearBtn" onclick="this.blur();">CLEAR</button>
+          <button class="btn btn-blue span-2" id="deleteBtn" onclick="this.blur();">DELETE</button>
+          <button class="btn" onclick="this.blur();" data-number>7</button>
+          <button class="btn" onclick="this.blur();" data-number>8</button>
+          <button class="btn" onclick="this.blur();" data-number>9</button>
+          <button class="btn btn-operator" onclick="this.blur();" data-operator>÷</button>
+          <button class="btn" onclick="this.blur();" data-number>4</button>
+          <button class="btn" onclick="this.blur();" data-number>5</button>
+          <button class="btn" onclick="this.blur();" data-number>6</button>
+          <button class="btn btn-operator" onclick="this.blur();" data-operator>×</button>
+          <button class="btn" onclick="this.blur();" data-number>1</button>
+          <button class="btn" onclick="this.blur();" data-number>2</button>
+          <button class="btn" onclick="this.blur();" data-number>3</button>
+          <button class="btn btn-operator" onclick="this.blur();" data-operator>−</button>
+          <button class="btn" onclick="this.blur();" id="pointBtn">.</button>
+          <button class="btn" onclick="this.blur();" data-number>0</button>
+          <button class="btn" onclick="this.blur();" id="equalsBtn">=</button>
+          <button class="btn btn-operator" onclick="this.blur();" data-operator>+</button>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
